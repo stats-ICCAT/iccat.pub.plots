@@ -1,0 +1,17 @@
+Package: iccat.pub.plots
+Type: Package
+Title: TBD
+Version: 0.1.0
+Author: ICCAT Secretariat
+Maintainer: Fabio Fiorellato <fabio.fiorellato@iccat.int>
+Description: TBD
+    TBD.
+License: TBD
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    iccat.pub.aes,
+    iccat.pub.data,
+    iccat.pub.maps,
+    scatterpie
+RoxygenNote: 7.3.1
