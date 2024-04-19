@@ -11,7 +11,7 @@
 #' @param center_pies TBD
 #' @return TBD
 #' @export
-catdis.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_keep = NULL, default_radius = pi, max_catch = NA, center_pies = TRUE) {
+catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_keep = NULL, default_radius = pi, max_catch = NA, center_pies = TRUE) {
   if(is.null(catdis_data) | nrow(catdis_data) == 0) stop("No catdis data provided!")
 
   if(!is.null(gears_to_keep)) {
@@ -124,7 +124,7 @@ catdis.labels_for_breaks = function(breaks) {
 #' @param num_breaks TBD
 #' @return TBD
 #' @export
-catdis.heatmap = function(base_map = map.atlantic(), catdis_data, gears_to_keep = NULL, gear, num_breaks = 5) {
+catdis.plot.heatmap = function(base_map = map.atlantic(), catdis_data, gears_to_keep = NULL, gear, num_breaks = 5) {
   if(is.null(catdis_data) | nrow(catdis_data) == 0) stop("No catdis data provided!")
 
   if(!is.null(gears_to_keep)) {

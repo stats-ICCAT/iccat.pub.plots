@@ -1,6 +1,12 @@
 options(scipen = 9999)
 
-t1nc.barplot = function(t1nc_data, relative = FALSE) {
+#' TBD
+#'
+#' @param t1nc_data TBD
+#' @param relative TBD
+#' @return TBD
+#' @export
+t1nc.plot.bar_gears = function(t1nc_data, relative = FALSE) {
   T1NC = t1nc_data[, .(CATCH = sum(Qty_t, na.rm = TRUE)), keyby = .(YEAR = YearC, GEAR_GROUP_CODE = GearGrp)]
 
   T1NC$GEAR_GROUP_CODE =
@@ -44,8 +50,8 @@ t1nc.barplot = function(t1nc_data, relative = FALSE) {
                        guide = guide_axis(n.dodge = 2))
 
   T1 = T1 +
-    scale_fill_manual (values = REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE %in% unique(T1NC_$GEAR_GROUP_CODE)]$FILL) +
-    scale_color_manual(values = REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE %in% unique(T1NC_$GEAR_GROUP_CODE)]$COLOR, guide = guide_none())
+    scale_fill_manual (values = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE %in% unique(T1NC_$GEAR_GROUP_CODE)]$FILL) +
+    scale_color_manual(values = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE %in% unique(T1NC_$GEAR_GROUP_CODE)]$COLOR, guide = guide_none())
 
   T1 = T1 +
     theme_bw() +
