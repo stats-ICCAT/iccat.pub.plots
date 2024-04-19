@@ -13,7 +13,5 @@ Depends:
     iccat.pub.aes,
     iccat.pub.data,
     iccat.pub.maps,
-    scatterpie,
-    flextable,
-    officer
+    scatterpie
 RoxygenNote: 7.3.1
