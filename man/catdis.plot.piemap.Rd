@@ -10,7 +10,9 @@ catdis.plot.piemap(
   gears_to_keep = NULL,
   default_radius = pi,
   max_catch = NA,
-  center_pies = TRUE
+  center_pies = TRUE,
+  legend.x = -90,
+  legend.y = -25
 )
 }
 \arguments{
@@ -25,6 +27,10 @@ catdis.plot.piemap(
 \item{max_catch}{TBD}
 
 \item{center_pies}{TBD}
+
+\item{legend.x}{TBD}
+
+\item{legend.y}{TBD}
 }
 \value{
 TBD

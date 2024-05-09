@@ -9,9 +9,11 @@
 #' @param default_radius TBD
 #' @param max_catch TBD
 #' @param center_pies TBD
+#' @param legend.x TBD
+#' @param legend.y TBD
 #' @return TBD
 #' @export
-catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_keep = NULL, default_radius = pi, max_catch = NA, center_pies = TRUE) {
+catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_keep = NULL, default_radius = pi, max_catch = NA, center_pies = TRUE, legend.x = -90, legend.y = -25) {
   if(is.null(catdis_data) | nrow(catdis_data) == 0) stop("No catdis data provided!")
 
   if(!is.null(gears_to_keep)) {
@@ -68,8 +70,8 @@ catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_k
 
       geom_scatterpie_legend(
         catdis_data_W$RADIUS_REL,
-        x = -90,
-        y = -25,
+        x = legend.x,
+        y = legend.y,
         labeller = function(x) {
           paste(prettyNum(round((x / default_radius) ^ 2 * ifelse(is.na(max_catch), max(catdis_data_W$RADIUS), max_catch)), big.mark=','), " t")
         },
