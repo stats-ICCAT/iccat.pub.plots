@@ -114,7 +114,8 @@ t1nc.plot.bar_gears = function(t1nc_data, max_categories = NA, relative = FALSE)
     factor(
       T1NC$GearGrp,
       labels = ref_gear_groups,
-      levels = ref_gear_groups
+      levels = ref_gear_groups,
+      ordered = TRUE
     )
 
   gear_group_colors = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE %in% unique(T1NC$GearGrp)]
@@ -202,5 +203,42 @@ t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
           title = "Stock"
         )
     )
+  )
+}
+
+#' TBD
+#'
+#' @param t1nc_data TBD
+#' @param relative TBD
+#' @return TBD
+#' @export
+t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE) {
+  T1NC = t1nc_data
+
+  sampling_area_colors =
+    data.table(
+      SAMPLING_AREA_CODE = unique(t1nc_data[order(SampAreaCode)]$SampAreaCode)
+    )
+
+  T1NC$SampAreaCode =
+    factor(
+      T1NC$SampAreaCode,
+      labels = sampling_area_colors$SAMPLING_AREA_CODE,
+      levels = sampling_area_colors$SAMPLING_AREA_CODE
+    )
+
+  sampling_area_colors$FILL = hue_pal()(nrow(sampling_area_colors))
+  sampling_area_colors[, COLOR := darken(FILL, amount = .3)]
+
+  return(
+    t1nc.plot.bar(
+      T1NC, relative, "SampAreaCode", colors = sampling_area_colors
+    ) +
+      guides(
+        fill =
+          guide_legend(
+            title = "Sampling area"
+          )
+      )
   )
 }
