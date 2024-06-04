@@ -105,7 +105,8 @@ t1nc.plot.line_gears = function(t1nc_data, max_categories = NA) {
     factor(
       T1NC$GearGrp,
       labels = ref_gear_groups,
-      levels = ref_gear_groups
+      levels = ref_gear_groups,
+      ordered = TRUE
     )
 
   gear_group_colors = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE %in% unique(T1NC$GearGrp)]
@@ -140,7 +141,8 @@ t1nc.plot.line_catch_types = function(t1nc_data) {
     factor(
       T1NC$CatchTypeCode,
       labels = iccat.pub.data::REF_CATCH_TYPES$CODE,
-      levels = iccat.pub.data::REF_CATCH_TYPES$CODE
+      levels = iccat.pub.data::REF_CATCH_TYPES$CODE,
+      ordered = TRUE
     )
 
   catch_type_colors = iccat.pub.aes::REF_CATCH_TYPES_COLORS[CATCH_TYPE_CODE %in% unique(T1NC$CatchTypeCode)]
@@ -175,7 +177,8 @@ t1nc.plot.line_stocks = function(t1nc_data) {
     factor(
       T1NC$Stock,
       labels = stock_colors$STOCK_AREA_CODE,
-      levels = stock_colors$STOCK_AREA_CODE
+      levels = stock_colors$STOCK_AREA_CODE,
+      ordered = TRUE
     )
 
   stock_colors$FILL = hue_pal()(nrow(stock_colors))
@@ -193,3 +196,41 @@ t1nc.plot.line_stocks = function(t1nc_data) {
       )
   )
 }
+
+#' TBD
+#'
+#' @param t1nc_data TBD
+#' @return TBD
+#' @export
+t1nc.plot.line_sampling_areas = function(t1nc_data) {
+  T1NC = t1nc_data
+
+  sampling_area_colors =
+    data.table(
+      SAMPLING_AREA_CODE = unique(t1nc_data[order(SampAreaCode)]$SampAreaCode)
+    )
+
+  T1NC$SampAreaCode =
+    factor(
+      T1NC$SampAreaCode,
+      labels = sampling_area_colors$SAMPLING_AREA_CODE,
+      levels = sampling_area_colors$SAMPLING_AREA_CODE,
+      ordered = TRUE
+    )
+
+  sampling_area_colors$FILL = hue_pal()(nrow(sampling_area_colors))
+  sampling_area_colors[, COLOR := darken(FILL, amount = .3)]
+
+  return(
+    t1nc.plot.line(
+      T1NC, "SampAreaCode", colors = sampling_area_colors
+    ) +
+      guides(
+        color =
+          guide_legend(
+            title = "Sampling area"
+          )
+      )
+  )
+}
+

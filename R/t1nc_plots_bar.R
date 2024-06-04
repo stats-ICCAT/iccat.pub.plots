@@ -187,7 +187,8 @@ t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
     factor(
       T1NC$Stock,
       labels = stock_colors$STOCK_AREA_CODE,
-      levels = stock_colors$STOCK_AREA_CODE
+      levels = stock_colors$STOCK_AREA_CODE,
+      ordered = TRUE
     )
 
   stock_colors$FILL = hue_pal()(nrow(stock_colors))
@@ -224,7 +225,8 @@ t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE) {
     factor(
       T1NC$SampAreaCode,
       labels = sampling_area_colors$SAMPLING_AREA_CODE,
-      levels = sampling_area_colors$SAMPLING_AREA_CODE
+      levels = sampling_area_colors$SAMPLING_AREA_CODE,
+      ordered = TRUE
     )
 
   sampling_area_colors$FILL = hue_pal()(nrow(sampling_area_colors))
