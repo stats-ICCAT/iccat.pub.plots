@@ -218,7 +218,16 @@ t1nc.plot.line_sampling_areas = function(t1nc_data) {
       ordered = TRUE
     )
 
+  sampling_area_colors = sampling_area_colors[SAMPLING_AREA_CODE != "unkn"]
+
   sampling_area_colors$FILL = hue_pal()(nrow(sampling_area_colors))
+  sampling_area_colors =
+    rbind(
+      sampling_area_colors,
+      data.table(SAMPLING_AREA_CODE = "unkn",
+                 FILL = "#666666")
+    )
+
   sampling_area_colors[, COLOR := darken(FILL, amount = .3)]
 
   return(
