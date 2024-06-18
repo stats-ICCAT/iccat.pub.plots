@@ -231,7 +231,9 @@ t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE) {
 
   sampling_area_colors = sampling_area_colors[SAMPLING_AREA_CODE != "unkn"]
 
-  sampling_area_colors$FILL = hue_pal()(nrow(sampling_area_colors))
+  if(nrow(sampling_area_colors) > 0) sampling_area_colors$FILL = hue_pal()(nrow(sampling_area_colors))
+  else sampling_area_colors = data.table(SAMPLING_AREA_CODE = character(), FILL = character())
+
   sampling_area_colors =
     rbind(
       sampling_area_colors,
