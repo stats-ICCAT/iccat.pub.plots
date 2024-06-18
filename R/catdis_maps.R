@@ -73,7 +73,7 @@ catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_k
         x = legend.x,
         y = legend.y,
         labeller = function(x) {
-          paste(prettyNum(round((x / default_radius) ^ 2 * ifelse(is.na(max_catch), max(catdis_data_W$RADIUS), max_catch)), big.mark=','), " t")
+          paste(prettyNum(round((x / default_radius) ^ 2 * ifelse(is.na(max_catch), max(catdis_data_W$RADIUS), max_catch)), big.mark = ","), " t")
         },
         breaks = c(0, default_radius / sqrt(2), default_radius),
         size = 2
