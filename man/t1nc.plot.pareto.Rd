@@ -14,7 +14,8 @@ t1nc.plot.pareto(
   category_colors,
   max_x,
   max_categories,
-  vertical
+  vertical,
+  rotate_x_labels = TRUE
 )
 }
 \arguments{

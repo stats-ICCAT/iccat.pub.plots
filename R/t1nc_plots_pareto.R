@@ -16,7 +16,8 @@ t1nc.plot.pareto = function(t1nc_data,
                             category_column, category_name,
                             category_levels, category_colors,
                             max_x, max_categories,
-                            vertical) {
+                            vertical,
+                            rotate_x_labels = TRUE) {
   RED      = "#AA0000"
   DARK_RED = "#770000"
 
@@ -180,7 +181,7 @@ t1nc.plot.pareto = function(t1nc_data,
                          sec.axis = sec_axis(breaks = seq(0, 100, 10),
                                              ~. * 100 / MAX_C, name = "% cumulative total value")
       ) +
-      coord_cartesian(ylim = LIMS) +
+      coord_cartesian(ylim = c(LIMS[1], LIMS[2] * 1.02)) +
       theme(
         axis.line.y.right  = element_line(color = RED),
         axis.ticks.y.right = element_line(color = RED),
@@ -189,8 +190,11 @@ t1nc.plot.pareto = function(t1nc_data,
       )
   }
 
+  if(rotate_x_labels)
+    T1 = T1 +
+      theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
   T1 = T1 +
-    theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
     theme(legend.position = "right") +
     guides(fill = guide_legend(title = category_name),
            color = guide_none())
