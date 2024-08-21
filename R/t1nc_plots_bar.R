@@ -132,6 +132,53 @@ t1nc.plot.bar_gears = function(t1nc_data, max_categories = NA, relative = FALSE)
     )
   )
 }
+#' TBD
+#'
+#' @param t1nc_data TBD
+#' @param max_categories TBD
+#' @param relative TBD
+#' @return TBD
+#' @export
+t1nc.plot.bar_species_gears = function(t1nc_data, max_categories = NA, relative = FALSE) {
+  T1NC = copy(t1nc_data)
+
+  ref_species_gear_groups = REF_SPECIES_GEAR_GROUPS[SPECIES_GEAR_GROUP %in% T1NC$SpcGearGrp, .(SPECIES_GEAR_GROUP_ORDER = max(SPECIES_GEAR_GROUP_ORDER)), keyby = .(SPECIES_GEAR_GROUP)][order(SPECIES_GEAR_GROUP_ORDER, SPECIES_GEAR_GROUP)]$SPECIES_GEAR_GROUP
+
+  if(!is.na(max_categories)) {
+    T1_C = T1NC[, .(Qty_t = sum(Qty_t, na.rm = TRUE)), keyby = .(SpcGearGrp)][order(-Qty_t)]
+
+    if(nrow(T1_C) > max_categories - 1) {
+      top_categories = head(T1_C$SpcGearGrp, max_categories - 1)
+
+      T1NC[!SpcGearGrp %in% top_categories, SpcGearGrp := "Others"]
+
+      ref_species_gear_groups = ref_species_gear_groups[which(ref_species_gear_groups %in% top_categories)]
+      ref_species_gear_groups = append(ref_species_gear_groups, "Others")
+    }
+  }
+
+  T1NC$SpcGearGrp =
+    factor(
+      T1NC$SpcGearGrp,
+      labels = ref_species_gear_groups,
+      levels = ref_species_gear_groups,
+      ordered = TRUE
+    )
+
+  species_gear_group_colors = iccat.pub.aes::REF_SPECIES_GEAR_GROUPS_COLORS[SPECIES_GEAR_GROUP %in% unique(T1NC$SpcGearGrp)]
+
+  return(
+    t1nc.plot.bar(
+      T1NC, relative, "SpcGearGrp", colors = species_gear_group_colors
+    ) +
+      guides(
+        fill =
+          guide_legend(
+            title = "Species gear group"
+          )
+      )
+  )
+}
 
 #' TBD
 #'
