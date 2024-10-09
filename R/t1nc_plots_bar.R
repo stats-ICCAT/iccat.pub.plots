@@ -132,6 +132,7 @@ t1nc.plot.bar_gears = function(t1nc_data, max_categories = NA, relative = FALSE)
     )
   )
 }
+
 #' TBD
 #'
 #' @param t1nc_data TBD
