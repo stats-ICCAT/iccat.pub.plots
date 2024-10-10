@@ -5,14 +5,15 @@
 \title{TBD}
 \usage{
 catdis.plot.piemap(
-  base_map = map.atlantic(),
+  base_map = map.atlantic(projection = iccat.pub.maps::CRS_EQUIDISTANT),
   catdis_data,
   gears_to_keep = NULL,
   default_radius = pi,
   max_catch = NA,
   center_pies = TRUE,
   legend.x = -90,
-  legend.y = -25
+  legend.y = -25,
+  crs = iccat.pub.maps::CRS_EQUIDISTANT
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ catdis.plot.piemap(
 \item{legend.x}{TBD}
 
 \item{legend.y}{TBD}
+
+\item{crs}{TBD}
 }
 \value{
 TBD

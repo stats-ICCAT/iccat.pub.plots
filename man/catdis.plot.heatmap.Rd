@@ -5,11 +5,12 @@
 \title{TBD}
 \usage{
 catdis.plot.heatmap(
-  base_map = map.atlantic(),
+  base_map = map.atlantic(projection = iccat.pub.maps::CRS_EQUIDISTANT),
   catdis_data,
   gears_to_keep = NULL,
   gear,
-  num_breaks = 5
+  num_breaks = 5,
+  crs = iccat.pub.maps::CRS_EQUIDISTANT
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ catdis.plot.heatmap(
 \item{gear}{TBD}
 
 \item{num_breaks}{TBD}
+
+\item{crs}{TBD}
 }
 \value{
 TBD

@@ -11,9 +11,10 @@
 #' @param center_pies TBD
 #' @param legend.x TBD
 #' @param legend.y TBD
+#' @param crs TBD
 #' @return TBD
 #' @export
-catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_keep = NULL, default_radius = pi, max_catch = NA, center_pies = TRUE, legend.x = -90, legend.y = -25) {
+catdis.plot.piemap = function(base_map = map.atlantic(projection = iccat.pub.maps::CRS_EQUIDISTANT), catdis_data, gears_to_keep = NULL, default_radius = pi, max_catch = NA, center_pies = TRUE, legend.x = -90, legend.y = -25, crs = iccat.pub.maps::CRS_EQUIDISTANT) {
   if(is.null(catdis_data) | nrow(catdis_data) == 0) stop("No catdis data provided!")
 
   if(!is.null(gears_to_keep)) {
@@ -50,11 +51,15 @@ catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_k
 
   fill_colors = REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE %in% unique(catdis_data$GEAR)][order(GEAR_GROUP_CODE)]$FILL #brewer.pal(n = length(unique(catdis_data$GEAR)), name = "Set2")
 
+  coords =
+    coord_sf(
+      crs = crs,
+      default_crs = sf::st_crs(CRS_WGS84), # The world map uses the EPSG:4326 projection
+      label_axes = "--EN"
+    )
+
   return(
     base_map +
-
-      #new_scale("fill") +
-      #new_scale("Color") +
 
       geom_scatterpie(
         data = catdis_data_W,
@@ -84,7 +89,9 @@ catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_k
         fill = guide_legend(
           position = "bottom"
         )
-      )
+      ) +
+
+      coords
   )
 }
 
@@ -97,9 +104,10 @@ catdis.plot.piemap = function(base_map = map.atlantic(), catdis_data, gears_to_k
 #' @param center_pies TBD
 #' @param legend.x TBD
 #' @param legend.y TBD
+#' @param crs TBD
 #' @return TBD
 #' @export
-catdis.plot.piemap.school = function(base_map = map.atlantic(), catdis_data, default_radius = pi, max_catch = NA, center_pies = TRUE, legend.x = -90, legend.y = -25) {
+catdis.plot.piemap.school = function(base_map = map.atlantic(projection = iccat.pub.maps::CRS_EQUIDISTANT), catdis_data, default_radius = pi, max_catch = NA, center_pies = TRUE, legend.x = -90, legend.y = -25, crs = iccat.pub.maps::CRS_EQUIDISTANT) {
   if(is.null(catdis_data) | nrow(catdis_data) == 0) stop("No catdis data provided!")
 
   catdis_data[!SchoolType %in% c("FAD", "FSC"), SchoolType := "UNK"]
@@ -148,11 +156,15 @@ catdis.plot.piemap.school = function(base_map = map.atlantic(), catdis_data, def
 
   fill_colors = fill_colors[SCHOOL_TYPE_CODE %in% unique(catdis_data$SCHOOL_TYPE)][order(SCHOOL_TYPE_CODE)]$FILL
 
+  coords =
+    coord_sf(
+      crs = crs,
+      default_crs = sf::st_crs(CRS_WGS84), # The world map uses the EPSG:4326 projection
+      label_axes = "--EN"
+    )
+
   return(
     base_map +
-
-      #new_scale("fill") +
-      #new_scale("Color") +
 
       geom_scatterpie(
         data = catdis_data_W,
@@ -182,7 +194,9 @@ catdis.plot.piemap.school = function(base_map = map.atlantic(), catdis_data, def
         fill = guide_legend(
           position = "bottom"
         )
-      )
+      ) +
+
+      coords
   )
 }
 
@@ -222,9 +236,10 @@ catdis.labels_for_breaks = function(breaks) {
 #' @param gears_to_keep TBD
 #' @param gear TBD
 #' @param num_breaks TBD
+#' @param crs TBD
 #' @return TBD
 #' @export
-catdis.plot.heatmap = function(base_map = map.atlantic(), catdis_data, gears_to_keep = NULL, gear, num_breaks = 5) {
+catdis.plot.heatmap = function(base_map = map.atlantic(projection = iccat.pub.maps::CRS_EQUIDISTANT), catdis_data, gears_to_keep = NULL, gear, num_breaks = 5, crs = iccat.pub.maps::CRS_EQUIDISTANT) {
   if(is.null(catdis_data) | nrow(catdis_data) == 0) stop("No catdis data provided!")
 
   if(!is.null(gears_to_keep)) {
@@ -241,10 +256,10 @@ catdis.plot.heatmap = function(base_map = map.atlantic(), catdis_data, gears_to_
   if(nrow(catdis_data) == 0) stop(paste0("No catdis data available for gear ", gear, "!"))
 
   catdis_data = merge(
-    st_as_sf(
+    geometries_for(
       iccat.pub.maps::GRIDS_5x5_RAW_GEOMETRIES,
-      crs = 4326,
-      wkt = "GEOMETRY_WKT"
+      source_crs = iccat.pub.maps::CRS_WGS84,
+      target_crs = crs
     ),
     catdis_data,
     by.y = "CWP_CODE", by.x = "CODE",
@@ -262,22 +277,36 @@ catdis.plot.heatmap = function(base_map = map.atlantic(), catdis_data, gears_to_
       extend = TRUE
     )
 
+  coords =
+    coord_sf(
+      crs = crs,
+      default_crs = sf::st_crs(CRS_WGS84), # The world map uses the EPSG:4326 projection
+      label_axes = "--EN"
+    )
+
   return(
     base_map +
+
       geom_sf(
         data = catdis_data,
         aes(alpha = CATCH),
         fill  = REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE == gear]$FILL,
         color = "transparent"
       ) +
-      scale_alpha_continuous(#breaks = seq(0, max(catdis_data$CATCH), max(catdis_data$CATCH) / num_breaks),
-        labels = scales::comma) +
+
+      scale_alpha_continuous(
+        #breaks = seq(0, max(catdis_data$CATCH), max(catdis_data$CATCH) / num_breaks),
+        labels = scales::comma
+      ) +
+
       guides(
         alpha = guide_legend(
           title = paste0(gear, " catches (t)"),
           position = "bottom"
         )
-      )
+      ) +
+
+      coords
   )
 }
 
@@ -287,9 +316,10 @@ catdis.plot.heatmap = function(base_map = map.atlantic(), catdis_data, gears_to_
 #' @param catdis_data TBD
 #' @param school_type TBD
 #' @param num_breaks TBD
+#' @param crs TBD
 #' @return TBD
 #' @export
-catdis.plot.heatmap.school = function(base_map = map.atlantic(), catdis_data, school_type, num_breaks = 5) {
+catdis.plot.heatmap.school = function(base_map = map.atlantic(projection = iccat.pub.maps::CRS_EQUIDISTANT), catdis_data, school_type, num_breaks = 5, crs = iccat.pub.maps::CRS_EQUIDISTANT) {
   if(is.null(catdis_data) | nrow(catdis_data) == 0) stop("No catdis data provided!")
 
   catdis_data[!SchoolType %in% c("FAD", "FSC"), SchoolType := "UNK"]
@@ -311,7 +341,7 @@ catdis.plot.heatmap.school = function(base_map = map.atlantic(), catdis_data, sc
   if(nrow(catdis_data) == 0) stop(paste0("No catdis data available for school type ", school_type, "!"))
 
   fill_colors = data.table(
-    SCHOOL_TYPE_CODE = c("FAD", "FSC", "UNK"),
+    SCHOOL_TYPE_CODE = c("FAD",    "FSC", "UNK"),
     FILL             = c("yellow", "red", "gray")
   )
 
@@ -320,10 +350,10 @@ catdis.plot.heatmap.school = function(base_map = map.atlantic(), catdis_data, sc
   fill_colors = fill_colors[SCHOOL_TYPE_CODE == school_type]
 
   catdis_data = merge(
-    st_as_sf(
+    geometries_for(
       iccat.pub.maps::GRIDS_5x5_RAW_GEOMETRIES,
-      crs = 4326,
-      wkt = "GEOMETRY_WKT"
+      source_crs = iccat.pub.maps::CRS_WGS84,
+      target_crs = iccat.pub.maps::CRS_EQUIDISTANT
     ),
     catdis_data,
     by.y = "CWP_CODE", by.x = "CODE",
@@ -341,22 +371,36 @@ catdis.plot.heatmap.school = function(base_map = map.atlantic(), catdis_data, sc
       extend = TRUE
     )
 
+  coords =
+    coord_sf(
+      crs = crs,
+      default_crs = sf::st_crs(CRS_WGS84), # The world map uses the EPSG:4326 projection
+      label_axes = "--EN"
+    )
+
   return(
     base_map +
+
       geom_sf(
         data = catdis_data,
         aes(alpha = CATCH),
         fill  = fill_colors$FILL,
         color = "transparent"
       ) +
-      scale_alpha_continuous(#breaks = seq(0, max(catdis_data$CATCH), max(catdis_data$CATCH) / num_breaks),
-        labels = scales::comma) +
+
+      scale_alpha_continuous(
+        #breaks = seq(0, max(catdis_data$CATCH), max(catdis_data$CATCH) / num_breaks),
+        labels = scales::comma
+      ) +
+
       guides(
         alpha = guide_legend(
           title = paste0(school_type, " catches (t)"),
           position = "bottom"
         )
-      )
+      ) +
+
+      coords
   )
 }
 
