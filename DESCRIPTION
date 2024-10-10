@@ -1,7 +1,7 @@
 Package: iccat.pub.plots
 Type: Package
 Title: TBD
-Version: 0.1.0
+Version: 0.1.1
 Author: ICCAT Secretariat
 Maintainer: Fabio Fiorellato <fabio.fiorellato@iccat.int>
 Description: TBD
@@ -12,6 +12,11 @@ LazyData: true
 Depends: 
     iccat.pub.aes,
     iccat.pub.data,
-    iccat.pub.maps,
-    scatterpie
+    ggplot2,
+    ggthemes,
+    ggnewscale,
+    colorspace,
+    scales,
+    scatterpie,
+    sf
 RoxygenNote: 7.3.1
