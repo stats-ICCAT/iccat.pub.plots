@@ -12,6 +12,7 @@ LazyData: true
 Depends: 
     iccat.pub.aes,
     iccat.pub.data,
+    data.table,
     ggplot2,
     ggthemes,
     ggnewscale,

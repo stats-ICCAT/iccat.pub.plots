@@ -3,12 +3,54 @@
 #' @param t1nc_data TBD
 #' @param relative TBD
 #' @param category_column TBD
+#' @param ref_categories TBD
+#' @param max_categories TBD
+#''@param other_category_label TBD
+#''@param legend_title TBD
 #' @param x_breaks_every TBD
 #' @param colors TBD
 #' @return TBD
-t1nc.plot.bar = function(t1nc_data, relative = FALSE, category_column = "GearGrp", x_breaks_every = 10, colors) {
+t1nc.plot.bar = function(t1nc_data,
+                         relative = FALSE,
+                         category_column,
+                         ref_categories = NULL,
+                         max_categories = NA,
+                         other_category_label = NA,
+                         legend_title,
+                         x_breaks_every = 10,
+                         colors) {
   T1NC = copy(t1nc_data)
   colnames(T1NC)[which(colnames(T1NC) == category_column)] = "CATEGORY_CODE"
+
+  if(is.null(ref_categories)) {
+    ref_categories = sort(unique(T1NC$CATEGORY_CODE))
+  }
+
+  if(!is.na(max_categories)) {
+    if(is.na(other_category_label))
+      other_category_label = "OT"
+
+    T1NC = T1NC[, .(Qty_t = sum(Qty_t, na.rm = TRUE)), keyby = .(CATEGORY_CODE)][order(-Qty_t)]
+
+    if(nrow(T1NC) > max_categories - 1) {
+      top_categories = head(T1NC$CATEGORY_CODE, max_categories - 1)
+
+      T1NC[!CATEGORY_CODE %in% top_categories, CATEGORY_CODE := other_category_label]
+
+      ref_categories = ref_categories[which(ref_categories %in% top_categories)]
+      ref_categories = append(ref_categories, other_category_label)
+    }
+  }
+
+  T1NC$CATEGORY_CODE =
+    factor(
+      T1NC$CATEGORY_CODE,
+      labels = ref_categories,
+      levels = ref_categories,
+      ordered = TRUE
+    )
+
+  category_colors = colors[CODE %in% unique(T1NC$CATEGORY_CODE)]
 
   T1NC = T1NC[, .(CATCH = sum(Qty_t, na.rm = TRUE)), keyby = .(YEAR = YearC, CATEGORY_CODE)]
 
@@ -42,7 +84,7 @@ t1nc.plot.bar = function(t1nc_data, relative = FALSE, category_column = "GearGrp
       mapping = aes(
         x = YEAR,
         y = CATCH,
-        fill = CATEGORY_CODE,
+        fill  = CATEGORY_CODE,
         color = CATEGORY_CODE,
         group = CATEGORY_CODE
       ),
@@ -55,11 +97,11 @@ t1nc.plot.bar = function(t1nc_data, relative = FALSE, category_column = "GearGrp
   T1 = T1 +
     scale_x_continuous(expand = c(0, 0),
                        breaks = x_breaks,
-                       guide = guide_axis(n.dodge = 2))
+                       guide  = guide_axis(n.dodge = 2))
 
   T1 = T1 +
-    scale_fill_manual (values = colors$FILL) +
-    scale_color_manual(values = colors$COLOR, guide = guide_none())
+    scale_fill_manual (values = category_colors$FILL) +
+    scale_color_manual(values = category_colors$COLOR, guide = guide_none())
 
   y_breaks = breaks_for(min(T1_y$CATCH), max(T1_y$CATCH))
   y_lims   = limit_for (min(T1_y$CATCH), max(T1_y$CATCH))
@@ -71,14 +113,24 @@ t1nc.plot.bar = function(t1nc_data, relative = FALSE, category_column = "GearGrp
 
   T1 = T1 +
     theme_bw() +
+
     labs(x = "Year",
          y = paste0("Catches (", ifelse(relative, "%", "t"), ")")) +
+
     scale_y_continuous(expand = c(0, 0),
                        breaks = y_breaks,
                        labels = function(x) { format(x, big.mark = ",", scientific = FALSE) },
                        sec.axis = dup_axis(name = element_blank())) +
     coord_cartesian(ylim = y_lims) +
-    theme(legend.position = "right")
+
+    theme(legend.position = "right") +
+
+    guides(
+      fill =
+        guide_legend(
+          title = legend_title
+        )
+    )
 
   return(
     T1
@@ -92,43 +144,16 @@ t1nc.plot.bar = function(t1nc_data, relative = FALSE, category_column = "GearGrp
 #' @param relative TBD
 #' @return TBD
 #' @export
-t1nc.plot.bar_gears = function(t1nc_data, max_categories = NA, relative = FALSE) {
-  T1NC = copy(t1nc_data)
-
-  ref_gear_groups = iccat.pub.data::REF_GEAR_GROUPS$CODE
-
-  if(!is.na(max_categories)) {
-    T1_C = T1NC[, .(Qty_t = sum(Qty_t, na.rm = TRUE)), keyby = .(GearGrp)][order(-Qty_t)]
-
-    if(nrow(T1_C) > max_categories - 1) {
-      top_categories = head(T1_C$GearGrp, max_categories - 1)
-
-      T1NC[!GearGrp %in% top_categories, GearGrp := "OT"]
-
-      ref_gear_groups = ref_gear_groups[which(ref_gear_groups %in% top_categories)]
-      ref_gear_groups = append(ref_gear_groups, "OT")
-    }
-  }
-
-  T1NC$GearGrp =
-    factor(
-      T1NC$GearGrp,
-      labels = ref_gear_groups,
-      levels = ref_gear_groups,
-      ordered = TRUE
-    )
-
-  gear_group_colors = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[GEAR_GROUP_CODE %in% unique(T1NC$GearGrp)]
-
+t1nc.plot.bar_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
   return(
     t1nc.plot.bar(
-      T1NC, relative, "GearGrp", colors = gear_group_colors
-    ) +
-    guides(
-      fill =
-        guide_legend(
-          title = "Gear group"
-        )
+      t1nc_data,
+      relative = relative,
+      category_column = "GearGrp",
+      ref_categories = iccat.pub.data::REF_GEAR_GROUPS$CODE,
+      max_categories = max_categories,
+      other_category_label = "OT",
+      colors = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[, .(CODE = GEAR_GROUP_CODE, FILL, COLOR)]
     )
   )
 }
@@ -140,44 +165,18 @@ t1nc.plot.bar_gears = function(t1nc_data, max_categories = NA, relative = FALSE)
 #' @param relative TBD
 #' @return TBD
 #' @export
-t1nc.plot.bar_species_gears = function(t1nc_data, max_categories = NA, relative = FALSE) {
-  T1NC = copy(t1nc_data)
-
-  ref_species_gear_groups = REF_SPECIES_GEAR_GROUPS[SPECIES_GEAR_GROUP %in% T1NC$SpcGearGrp, .(SPECIES_GEAR_GROUP_ORDER = max(SPECIES_GEAR_GROUP_ORDER)), keyby = .(SPECIES_GEAR_GROUP)][order(SPECIES_GEAR_GROUP_ORDER, SPECIES_GEAR_GROUP)]$SPECIES_GEAR_GROUP
-
-  if(!is.na(max_categories)) {
-    T1_C = T1NC[, .(Qty_t = sum(Qty_t, na.rm = TRUE)), keyby = .(SpcGearGrp)][order(-Qty_t)]
-
-    if(nrow(T1_C) > max_categories - 1) {
-      top_categories = head(T1_C$SpcGearGrp, max_categories - 1)
-
-      T1NC[!SpcGearGrp %in% top_categories, SpcGearGrp := "Others"]
-
-      ref_species_gear_groups = ref_species_gear_groups[which(ref_species_gear_groups %in% top_categories)]
-      ref_species_gear_groups = append(ref_species_gear_groups, "Others")
-    }
-  }
-
-  T1NC$SpcGearGrp =
-    factor(
-      T1NC$SpcGearGrp,
-      labels = ref_species_gear_groups,
-      levels = ref_species_gear_groups,
-      ordered = TRUE
-    )
-
-  species_gear_group_colors = iccat.pub.aes::REF_SPECIES_GEAR_GROUPS_COLORS[SPECIES_GEAR_GROUP %in% unique(T1NC$SpcGearGrp)]
-
+t1nc.plot.bar_species_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
   return(
     t1nc.plot.bar(
-      T1NC, relative, "SpcGearGrp", colors = species_gear_group_colors
-    ) +
-      guides(
-        fill =
-          guide_legend(
-            title = "Species gear group"
-          )
-      )
+      t1nc_data,
+      relative = relative,
+      category_column = "SpcGearGrp",
+      ref_categories = iccat.pub.data::REF_SPECIES_GEAR_GROUPS[SPECIES_GEAR_GROUP %in% t1nc_data$SpcGearGrp, .(SPECIES_GEAR_GROUP_ORDER = max(SPECIES_GEAR_GROUP_ORDER)), keyby = .(SPECIES_GEAR_GROUP)][order(SPECIES_GEAR_GROUP_ORDER, SPECIES_GEAR_GROUP)]$SPECIES_GEAR_GROUP,
+      max_categories = max_categories,
+      other_category_label = "Others",
+      legend_title = "Species gear group",
+      colors = iccat.pub.aes::REF_SPECIES_GEAR_GROUPS_COLORS[, .(CODE = SPECIES_GEAR_GROUP, FILL, COLOR)]
+    )
   )
 }
 
@@ -188,32 +187,15 @@ t1nc.plot.bar_species_gears = function(t1nc_data, max_categories = NA, relative 
 #' @return TBD
 #' @export
 t1nc.plot.bar_catch_types = function(t1nc_data, relative = FALSE) {
-  T1NC = copy(t1nc_data)
-
-  colors =
-    data.table(
-      CATCH_TYPE_CODE = iccat.pub.data::REF_CATCH_TYPES$CODE
-    )
-
-  T1NC$CatchTypeCode =
-    factor(
-      T1NC$CatchTypeCode,
-      labels = iccat.pub.data::REF_CATCH_TYPES$CODE,
-      levels = iccat.pub.data::REF_CATCH_TYPES$CODE
-    )
-
-  catch_type_colors = iccat.pub.aes::REF_CATCH_TYPES_COLORS[CATCH_TYPE_CODE %in% unique(T1NC$CatchTypeCode)]
-
   return(
     t1nc.plot.bar(
-      T1NC, relative, "CatchTypeCode", colors = catch_type_colors
-    ) +
-      guides(
-        fill =
-          guide_legend(
-            title = "Catch type"
-          )
-      )
+      t1nc_data,
+      relative = relative,
+      category_column = "CatchTypeCode",
+      ref_categories = iccat.pub.data::REF_CATCH_TYPES$CODE,
+      legend_title = "Catch type",
+      colors = iccat.pub.aes::REF_CATCH_TYPES_COLORS[, .(CODE = CATCH_TYPE_CODE, FILL, COLOR)]
+    )
   )
 }
 
@@ -224,33 +206,24 @@ t1nc.plot.bar_catch_types = function(t1nc_data, relative = FALSE) {
 #' @return TBD
 #' @export
 t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
-  T1NC = t1nc_data
+  stock_codes = sort(unique(t1nc_data$Stock))
 
   stock_colors =
     data.table(
-      STOCK_AREA_CODE = unique(t1nc_data[order(Stock)]$Stock)
+      CODE = stock_codes,
+      FILL = hue_pal()(length(stock_codes))
     )
 
-  T1NC$Stock =
-    factor(
-      T1NC$Stock,
-      labels = stock_colors$STOCK_AREA_CODE,
-      levels = stock_colors$STOCK_AREA_CODE,
-      ordered = TRUE
-    )
-
-  stock_colors$FILL = hue_pal()(nrow(stock_colors))
   stock_colors[, COLOR := darken(FILL, amount = .3)]
 
   return(
     t1nc.plot.bar(
-      T1NC, relative, "Stock", colors = stock_colors
-    ) +
-    guides(
-      fill =
-        guide_legend(
-          title = "Stock"
-        )
+      t1nc_data,
+      relative = relative,
+      category_column = "Stock",
+      ref_categories  = stock_codes,
+      legend_title    = "Stock",
+      colors          = stock_colors
     )
   )
 }
@@ -262,44 +235,34 @@ t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
 #' @return TBD
 #' @export
 t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE) {
-  T1NC = t1nc_data
+  sampling_area_codes = sort(unique(t1nc_data$SampAreaCode))
+  sampling_area_codes = sampling_area_codes[which(sampling_area_codes != "unkn")]
 
   sampling_area_colors =
     data.table(
-      SAMPLING_AREA_CODE = unique(t1nc_data[order(SampAreaCode)]$SampAreaCode)
+      CODE = sampling_area_codes,
+      FILL = hue_pal()(length(sampling_area_codes))
     )
-
-  T1NC$SampAreaCode =
-    factor(
-      T1NC$SampAreaCode,
-      labels = sampling_area_colors$SAMPLING_AREA_CODE,
-      levels = sampling_area_colors$SAMPLING_AREA_CODE,
-      ordered = TRUE
-    )
-
-  sampling_area_colors = sampling_area_colors[SAMPLING_AREA_CODE != "unkn"]
-
-  if(nrow(sampling_area_colors) > 0) sampling_area_colors$FILL = hue_pal()(nrow(sampling_area_colors))
-  else sampling_area_colors = data.table(SAMPLING_AREA_CODE = character(), FILL = character())
 
   sampling_area_colors =
-    rbind(
-      sampling_area_colors,
-      data.table(SAMPLING_AREA_CODE = "unkn",
-                 FILL = "#666666")
+    rbind(sampling_area_colors,
+          data.table(CODE = "unkn",
+                     FILL = "#666666"
+          )
     )
 
   sampling_area_colors[, COLOR := darken(FILL, amount = .3)]
 
+  sampling_area_codes = append(sampling_area_codes, "unkn")
+
   return(
     t1nc.plot.bar(
-      T1NC, relative, "SampAreaCode", colors = sampling_area_colors
-    ) +
-      guides(
-        fill =
-          guide_legend(
-            title = "Sampling area"
-          )
-      )
+      t1nc_data,
+      relative = relative,
+      category_column = "SampAreaCode",
+      ref_categories  = sampling_area_codes,
+      legend_title    = "Sampling area",
+      colors          = sampling_area_colors
+    )
   )
 }
