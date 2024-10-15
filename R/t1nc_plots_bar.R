@@ -30,10 +30,10 @@ t1nc.plot.bar = function(t1nc_data,
     if(is.na(other_category_label))
       other_category_label = "OT"
 
-    T1NC = T1NC[, .(Qty_t = sum(Qty_t, na.rm = TRUE)), keyby = .(CATEGORY_CODE)][order(-Qty_t)]
+    T1NC_c = T1NC[, .(Qty_t = sum(Qty_t, na.rm = TRUE)), keyby = .(CATEGORY_CODE)][order(-Qty_t)]
 
-    if(nrow(T1NC) > max_categories - 1) {
-      top_categories = head(T1NC$CATEGORY_CODE, max_categories - 1)
+    if(nrow(T1NC_c) > max_categories - 1) {
+      top_categories = head(T1NC_c$CATEGORY_CODE, max_categories - 1)
 
       T1NC[!CATEGORY_CODE %in% top_categories, CATEGORY_CODE := other_category_label]
 
@@ -153,6 +153,7 @@ t1nc.plot.bar_gear_groups = function(t1nc_data, max_categories = NA, relative = 
       ref_categories = iccat.pub.data::REF_GEAR_GROUPS$CODE,
       max_categories = max_categories,
       other_category_label = "OT",
+      legend_title = "Gear group",
       colors = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[, .(CODE = GEAR_GROUP_CODE, FILL, COLOR)]
     )
   )
@@ -232,9 +233,10 @@ t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
 #'
 #' @param t1nc_data TBD
 #' @param relative TBD
+#' @param max_categories TBD
 #' @return TBD
 #' @export
-t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE) {
+t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE, max_categories = 16) {
   sampling_area_codes = sort(unique(t1nc_data$SampAreaCode))
   sampling_area_codes = sampling_area_codes[which(sampling_area_codes != "unkn")]
 
@@ -246,14 +248,14 @@ t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE) {
 
   sampling_area_colors =
     rbind(sampling_area_colors,
-          data.table(CODE = "unkn",
-                     FILL = "#666666"
+          data.table(CODE = c("unkn",    "Other areas"),
+                     FILL = c("#666666", "#000000")
           )
     )
 
   sampling_area_colors[, COLOR := darken(FILL, amount = .3)]
 
-  sampling_area_codes = append(sampling_area_codes, "unkn")
+  sampling_area_codes = append(sampling_area_codes, c("unkn", "Other areas"))
 
   return(
     t1nc.plot.bar(
@@ -261,6 +263,8 @@ t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE) {
       relative = relative,
       category_column = "SampAreaCode",
       ref_categories  = sampling_area_codes,
+      max_categories  = max_categories,
+      other_category_label = "Other areas",
       legend_title    = "Sampling area",
       colors          = sampling_area_colors
     )

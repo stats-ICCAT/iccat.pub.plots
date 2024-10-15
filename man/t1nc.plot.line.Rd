@@ -6,7 +6,12 @@
 \usage{
 t1nc.plot.line(
   t1nc_data,
-  category_column = "GearGrp",
+  relative = FALSE,
+  category_column,
+  ref_categories = NULL,
+  max_categories = NA,
+  other_category_label = NA,
+  legend_title,
   x_breaks_every = 10,
   colors
 )
@@ -15,6 +20,12 @@ t1nc.plot.line(
 \item{t1nc_data}{TBD}
 
 \item{category_column}{TBD}
+
+\item{ref_categories}{TBD}
+
+\item{max_categories}{TBD
+'@param other_category_label TBD
+'@param legend_title TBD}
 
 \item{x_breaks_every}{TBD}
 

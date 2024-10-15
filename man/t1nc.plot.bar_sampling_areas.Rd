@@ -4,12 +4,14 @@
 \alias{t1nc.plot.bar_sampling_areas}
 \title{TBD}
 \usage{
-t1nc.plot.bar_sampling_areas(t1nc_data, relative = FALSE)
+t1nc.plot.bar_sampling_areas(t1nc_data, relative = FALSE, max_categories = 16)
 }
 \arguments{
 \item{t1nc_data}{TBD}
 
 \item{relative}{TBD}
+
+\item{max_categories}{TBD}
 }
 \value{
 TBD

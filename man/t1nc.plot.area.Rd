@@ -13,7 +13,7 @@ t1nc.plot.area(
   other_category_label = NA,
   legend_title,
   x_breaks_every = 10,
-  colorss
+  colors
 )
 }
 \arguments{
