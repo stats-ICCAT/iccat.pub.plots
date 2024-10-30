@@ -221,7 +221,7 @@ t1nc.plot.line_stocks = function(t1nc_data) {
 #' @param t1nc_data TBD
 #' @return TBD
 #' @export
-t1nc.plot.line_sampling_areas = function(t1nc_data) {
+t1nc.plot.line_sampling_areas = function(t1nc_data, max_categories = NA) {
   sampling_area_codes = sort(unique(t1nc_data$SampAreaCode))
   sampling_area_codes = sampling_area_codes[which(sampling_area_codes != "unkn")]
 
