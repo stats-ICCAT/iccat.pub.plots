@@ -158,7 +158,7 @@ t1nc.plot.line_gear_groups = function(t1nc_data, max_categories = NA) {
 #' @param relative TBD
 #' @return TBD
 #' @export
-t1nc.plot.bar_species_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
+t1nc.plot.line_species_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
   return(
     t1nc.plot.line(
       t1nc_data,
