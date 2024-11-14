@@ -143,6 +143,11 @@ t1nc.plot.line_species_gear_groups(T1NC)
 ```
 ![image](https://github.com/user-attachments/assets/9d37c35f-a9cc-48ba-b582-83352d05f624)
 
+```
+t1nc.plot.pareto_fleet_gears(T1NC[YearC >= 1994])
+```
+![image](https://github.com/user-attachments/assets/58770e43-a6bd-4a60-91b3-b72127ffebeb)
+
 ### *Dataless* Atlantic maps
 
 #### Default empty Atlantic map
