@@ -6,11 +6,30 @@ This library is meant for public usage, and for this reason it does not have dep
 
 ## Artifacts that can be produced using the functions provided by the library
 
-1) Bar charts
-2) Area charts
+1) Bar charts (both absolute / relative)
++ Generic
++ By gear group
++ By species-specific gear group
++ By catch type
++ By stock
++ By sampling area 
+2) Area charts (both absolute / relative)
++ Generic
++ By gear group
++ By species-specific gear group
++ By catch type
++ By stock
++ By sampling area 
 3) Line charts
-4) Pareto charts
-
++ Generic
++ By gear group
++ By species-specific gear group
++ By catch type
++ By stock
++ By sampling area 
+4) Pareto charts (both horizontal / vertical)
++ Generic
++ By fleet and gear
 ## External dependencies (CRAN) <a name="external_deps"></a>
 + `data.table`
 + `ggplot2`
