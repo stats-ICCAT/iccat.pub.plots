@@ -101,20 +101,37 @@ t1nc.plot.pareto = function(t1nc_data,
       )
   }
 
-  T1 = T1 +
-    geom_bar(
-      aes(
-        x = X_CODE,
-        y = CATCH,
-        fill  = CATEGORY_CODE,
-        color = CATEGORY_CODE,
-        group = CATEGORY_CODE
-      ),
-      stat      = "identity",
-      position  = "stack",
-      width     = 0.9,
-      linewidth = 0.2
-    )
+  if(vertical) {
+    T1 = T1 +
+      geom_bar(
+        aes(
+          x = CATCH,
+          y = X_CODE,
+          fill  = CATEGORY_CODE,
+          color = CATEGORY_CODE,
+          group = CATEGORY_CODE
+        ),
+        stat      = "identity",
+        position  = "stack",
+        width     = 0.9,
+        linewidth = 0.2
+      )
+  } else {
+    T1 = T1 +
+      geom_bar(
+        aes(
+          x = X_CODE,
+          y = CATCH,
+          fill  = CATEGORY_CODE,
+          color = CATEGORY_CODE,
+          group = CATEGORY_CODE
+        ),
+        stat      = "identity",
+        position  = "stack",
+        width     = 0.9,
+        linewidth = 0.2
+      )
+  }
 
   MIN_C = min(T1NC_X$CATCH)
   MAX_C = max(T1NC_X$CATCH)

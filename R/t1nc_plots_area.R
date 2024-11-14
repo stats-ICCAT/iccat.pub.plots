@@ -203,6 +203,7 @@ t1nc.plot.area_gear_groups = function(t1nc_data, max_categories = NA, relative =
       ref_categories = iccat.pub.data::REF_GEAR_GROUPS$CODE,
       max_categories = max_categories,
       other_category_label = "OT",
+      legend_title = "Gear group",
       colors = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[, .(CODE = GEAR_GROUP_CODE, FILL, COLOR)]
     )
   )

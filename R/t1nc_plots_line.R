@@ -66,7 +66,7 @@ t1nc.plot.line = function(t1nc_data,
 
   x_breaks = unique(x_breaks)
 
-  T1_y = T1NC[, .(CATCH = sum(CATCH, na.rm = TRUE)), keyby = .(YEAR)]
+  T1_y = T1NC[, .(CATCH = max(CATCH, na.rm = TRUE)), keyby = .(YEAR)]
 
   T1 =
     initialize_plot(
@@ -119,7 +119,7 @@ t1nc.plot.line = function(t1nc_data,
     theme(legend.position = "right") +
 
     guides(
-      fill =
+      color =
         guide_legend(
           title = legend_title
         )
