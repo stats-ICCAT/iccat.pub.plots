@@ -2,7 +2,8 @@
 % Please edit documentation in R/t1nc_plots_bar.R
 \name{t1nc.plot.bar}
 \alias{t1nc.plot.bar}
-\title{TBD}
+\title{Generic plots of annual time series T1 nominal catch data as bar charts (either absolute or relative) categorized
+through one of the T1 nominal catch attributes.}
 \usage{
 t1nc.plot.bar(
   t1nc_data,
@@ -17,25 +18,26 @@ t1nc.plot.bar(
 )
 }
 \arguments{
-\item{t1nc_data}{TBD}
+\item{t1nc_data}{the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}}
 
-\item{relative}{TBD}
+\item{relative}{whether or not the bars should represent the relative composition of annual catches, or their absolute values}
 
-\item{category_column}{TBD}
+\item{category_column}{the category column among those included in the T1 nominal catch dataset}
 
-\item{ref_categories}{TBD}
+\item{ref_categories}{an optional list of reference category values, If not provided, it is calculated from the actual data}
 
-\item{max_categories}{TBD
-'@param other_category_label TBD
-'@param legend_title TBD}
+\item{max_categories}{the maximum number of categories to display. Everything else will be placed under the _Other_ category
+'@param other_category_label the _Other_ category label
+'@param legend_title the legend title}
 
-\item{x_breaks_every}{TBD}
+\item{x_breaks_every}{the number of years at which X axis breaks should be placed}
 
-\item{colors}{TBD}
+\item{colors}{a color table for the selected category, i.e., a table with three columns: \code{_categoryColumn_CODE}, \code{FILL}, \code{OUTLINE}, with the latter two being the RGB colors for the fill and outline components of each bar}
 }
 \value{
-TBD
+a bar chart of the provided data with the given configuration
 }
 \description{
-TBD
+Generic plots of annual time series T1 nominal catch data as bar charts (either absolute or relative) categorized
+through one of the T1 nominal catch attributes.
 }

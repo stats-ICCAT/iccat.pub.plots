@@ -2,7 +2,7 @@
 % Please edit documentation in R/t1nc_plots_pareto.R
 \name{t1nc.plot.pareto_fleet_gears}
 \alias{t1nc.plot.pareto_fleet_gears}
-\title{TBD}
+\title{Default Pareto charts of T1 nominal catch data, with fleets as X-axis categories, and gear groups as catch component categories.}
 \usage{
 t1nc.plot.pareto_fleet_gears(
   t1nc_data,
@@ -12,17 +12,17 @@ t1nc.plot.pareto_fleet_gears(
 )
 }
 \arguments{
-\item{t1nc_data}{TBD}
+\item{t1nc_data}{the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}}
 
-\item{max_x}{TBD}
+\item{max_x}{the maximum number of categories being displayed on the X axis. Everything else will go under the _All others_ label}
 
-\item{max_categories}{TBD}
+\item{max_categories}{the maximum number of catch categories. Everything else will go under the _All others_ label}
 
-\item{vertical}{TBD}
+\item{vertical}{to display of the chart vertically}
 }
 \value{
-TBD
+a Pareto chart of T1 nominal catches configured according to the provided parameters
 }
 \description{
-TBD
+Default Pareto charts of T1 nominal catch data, with fleets as X-axis categories, and gear groups as catch component categories.
 }

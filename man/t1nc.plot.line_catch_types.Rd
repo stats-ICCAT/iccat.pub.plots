@@ -2,16 +2,16 @@
 % Please edit documentation in R/t1nc_plots_line.R
 \name{t1nc.plot.line_catch_types}
 \alias{t1nc.plot.line_catch_types}
-\title{TBD}
+\title{Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by catch type (retained / landed / discarded dead / etc.)}
 \usage{
 t1nc.plot.line_catch_types(t1nc_data)
 }
 \arguments{
-\item{t1nc_data}{TBD}
+\item{t1nc_data}{the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}}
 }
 \value{
-TBD
+a line chart of the provided data with the given configuration
 }
 \description{
-TBD
+Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by catch type (retained / landed / discarded dead / etc.)
 }

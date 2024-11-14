@@ -1,16 +1,19 @@
-#' TBD
+#' Generic Pareto charts for T1 nominal catch data, providing two distinct categorizations: one for the X axis, and one for the
+#' catch components. The final chart also includes a superimposed cumulative (relative) catch plot.
 #'
-#' @param t1nc_data TBD
-#' @param x_column TBD
-#' @param x_name TBD
-#' @param category_column TBD
-#' @param category_name TBD
-#' @param category_levels TBD
-#' @param category_colors TBD
-#' @param max_x TBD
-#' @param max_categories TBD
-#' @param vertical TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param x_column the category column for the-X axis, chosen among the columns included in the T1 nominal catch dataset
+#' @param x_name the category name for the X-axis
+#' @param category_column the category column for the catch components, chosen among the columns included in the T1 nominal catch dataset
+#' @param category_name the name of the category
+#' @param category_levels the list of reference category values
+#' @param category_colors a color table for the catch component categories, i.e., a table with three columns: \code{_categoryColumn_CODE}, \code{FILL}, \code{OUTLINE}, with the latter two being the RGB colors for the fill and outline components of each bar
+#' @param max_x the maximum number of categories being displayed on the X axis. Everything else will go under the _All others_ label
+#' @param max_categories the maximum number of catch categories. Everything else will go under the _All others_ label
+#' @param vertical to display the chart vertically
+#' @param rotate_x_labels to rotate the X-axis labels vertically
+#' @return a Pareto chart of T1 nominal catches configured according to the provided parameters
+#' @export
 t1nc.plot.pareto = function(t1nc_data,
                             x_column, x_name,
                             category_column, category_name,
@@ -204,14 +207,13 @@ t1nc.plot.pareto = function(t1nc_data,
   )
 }
 
-#' TBD
+#' Default Pareto charts of T1 nominal catch data, with fleets as X-axis categories, and gear groups as catch component categories.
 #'
-#' @param t1nc_data TBD
-#' @param max_x TBD
-#' @param max_categories TBD
-#' @param vertical TBD
-#' @return TBD
-#'
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param max_x the maximum number of categories being displayed on the X axis. Everything else will go under the _All others_ label
+#' @param max_categories the maximum number of catch categories. Everything else will go under the _All others_ label
+#' @param vertical to display of the chart vertically
+#' @return a Pareto chart of T1 nominal catches configured according to the provided parameters
 #' @export
 t1nc.plot.pareto_fleet_gears = function(t1nc_data,
                                         max_x = 10, max_categories = 10,

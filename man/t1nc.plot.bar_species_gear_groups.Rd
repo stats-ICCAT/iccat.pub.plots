@@ -2,7 +2,8 @@
 % Please edit documentation in R/t1nc_plots_bar.R
 \name{t1nc.plot.bar_species_gear_groups}
 \alias{t1nc.plot.bar_species_gear_groups}
-\title{TBD}
+\title{Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by species' gear group
+(see the \code{GearGrpBySpecies} and \code{Species} table in \code{\link{iccat.dev.base::DATABASE_T1}})}
 \usage{
 t1nc.plot.bar_species_gear_groups(
   t1nc_data,
@@ -11,15 +12,16 @@ t1nc.plot.bar_species_gear_groups(
 )
 }
 \arguments{
-\item{t1nc_data}{TBD}
+\item{t1nc_data}{the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}}
 
-\item{max_categories}{TBD}
+\item{max_categories}{the maximum number of categories to display. Everything else will be placed under the _Other_ category}
 
-\item{relative}{TBD}
+\item{relative}{whether or not the bars should represent the relative composition of annual catches, or their absolute values}
 }
 \value{
-TBD
+a bar chart of the provided data with the given configuration
 }
 \description{
-TBD
+Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by species' gear group
+(see the \code{GearGrpBySpecies} and \code{Species} table in \code{\link{iccat.dev.base::DATABASE_T1}})
 }

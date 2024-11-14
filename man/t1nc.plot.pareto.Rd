@@ -2,7 +2,8 @@
 % Please edit documentation in R/t1nc_plots_pareto.R
 \name{t1nc.plot.pareto}
 \alias{t1nc.plot.pareto}
-\title{TBD}
+\title{Generic Pareto charts for T1 nominal catch data, providing two distinct categorizations: one for the X axis, and one for the
+catch components. The final chart also includes a superimposed cumulative (relative) catch plot.}
 \usage{
 t1nc.plot.pareto(
   t1nc_data,
@@ -19,29 +20,32 @@ t1nc.plot.pareto(
 )
 }
 \arguments{
-\item{t1nc_data}{TBD}
+\item{t1nc_data}{the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}}
 
-\item{x_column}{TBD}
+\item{x_column}{the category column for the-X axis, chosen among the columns included in the T1 nominal catch dataset}
 
-\item{x_name}{TBD}
+\item{x_name}{the category name for the X-axis}
 
-\item{category_column}{TBD}
+\item{category_column}{the category column for the catch components, chosen among the columns included in the T1 nominal catch dataset}
 
-\item{category_name}{TBD}
+\item{category_name}{the name of the category}
 
-\item{category_levels}{TBD}
+\item{category_levels}{the list of reference category values}
 
-\item{category_colors}{TBD}
+\item{category_colors}{a color table for the catch component categories, i.e., a table with three columns: \code{_categoryColumn_CODE}, \code{FILL}, \code{OUTLINE}, with the latter two being the RGB colors for the fill and outline components of each bar}
 
-\item{max_x}{TBD}
+\item{max_x}{the maximum number of categories being displayed on the X axis. Everything else will go under the _All others_ label}
 
-\item{max_categories}{TBD}
+\item{max_categories}{the maximum number of catch categories. Everything else will go under the _All others_ label}
 
-\item{vertical}{TBD}
+\item{vertical}{to display the chart vertically}
+
+\item{rotate_x_labels}{to rotate the X-axis labels vertically}
 }
 \value{
-TBD
+a Pareto chart of T1 nominal catches configured according to the provided parameters
 }
 \description{
-TBD
+Generic Pareto charts for T1 nominal catch data, providing two distinct categorizations: one for the X axis, and one for the
+catch components. The final chart also includes a superimposed cumulative (relative) catch plot.
 }

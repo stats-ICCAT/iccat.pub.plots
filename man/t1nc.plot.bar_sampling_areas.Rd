@@ -2,20 +2,20 @@
 % Please edit documentation in R/t1nc_plots_bar.R
 \name{t1nc.plot.bar_sampling_areas}
 \alias{t1nc.plot.bar_sampling_areas}
-\title{TBD}
+\title{Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by species' sampling areas}
 \usage{
 t1nc.plot.bar_sampling_areas(t1nc_data, relative = FALSE, max_categories = 16)
 }
 \arguments{
-\item{t1nc_data}{TBD}
+\item{t1nc_data}{the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}}
 
-\item{relative}{TBD}
+\item{relative}{whether or not the bars should represent the relative composition of annual catches, or their absolute values}
 
-\item{max_categories}{TBD}
+\item{max_categories}{the maximum number of categories to display. Everything else will be placed under the _Other_ category}
 }
 \value{
-TBD
+a bar chart of the provided data with the given configuration
 }
 \description{
-TBD
+Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by species' sampling areas
 }

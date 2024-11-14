@@ -2,16 +2,18 @@
 % Please edit documentation in R/t1nc_plots_line.R
 \name{t1nc.plot.line_sampling_areas}
 \alias{t1nc.plot.line_sampling_areas}
-\title{TBD}
+\title{Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by species' sampling areas}
 \usage{
-t1nc.plot.line_sampling_areas(t1nc_data)
+t1nc.plot.line_sampling_areas(t1nc_data, max_categories = NA)
 }
 \arguments{
-\item{t1nc_data}{TBD}
+\item{t1nc_data}{the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}}
+
+\item{max_categories}{the maximum number of categories to display. Everything else will be placed under the _Other_ category}
 }
 \value{
-TBD
+a linechart of the provided data with the given configuration
 }
 \description{
-TBD
+Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by species' sampling areas
 }

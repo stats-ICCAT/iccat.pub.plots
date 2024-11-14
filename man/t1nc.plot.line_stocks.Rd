@@ -2,16 +2,16 @@
 % Please edit documentation in R/t1nc_plots_line.R
 \name{t1nc.plot.line_stocks}
 \alias{t1nc.plot.line_stocks}
-\title{TBD}
+\title{Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by species' stocks}
 \usage{
 t1nc.plot.line_stocks(t1nc_data)
 }
 \arguments{
-\item{t1nc_data}{TBD}
+\item{t1nc_data}{the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}}
 }
 \value{
-TBD
+a line chart of the provided data with the given configuration
 }
 \description{
-TBD
+Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by species' stocks
 }

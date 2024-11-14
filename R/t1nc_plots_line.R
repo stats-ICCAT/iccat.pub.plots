@@ -1,17 +1,16 @@
-
-#' TBD
+#' Generic plots of annual time series T1 nominal catch data line charts categorized
+#' through one of the T1 nominal catch attributes.
 #'
-#' @param t1nc_data TBD
-#' @param category_column TBD
-#' @param ref_categories TBD
-#' @param max_categories TBD
-#''@param other_category_label TBD
-#''@param legend_title TBD
-#' @param x_breaks_every TBD
-#' @param colors TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param category_column the category column among those included in the T1 nominal catch dataset
+#' @param ref_categories an optional list of reference category values, If not provided, it is calculated from the actual data
+#' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
+#''@param other_category_label the _Other_ category label
+#''@param legend_title the legend title
+#' @param x_breaks_every the number of years at which X axis breaks should be placed
+#' @param colors a color table for the selected category, i.e., a table with three columns: \code{_categoryName_CODE}, \code{FILL}, \code{OUTLINE}, with the latter two being the RGB colors for the fill and outline components of each bar
+#' @return a line chart of the provided data with the given configuration
 t1nc.plot.line = function(t1nc_data,
-                          relative = FALSE,
                           category_column,
                           ref_categories = NULL,
                           max_categories = NA,
@@ -131,11 +130,11 @@ t1nc.plot.line = function(t1nc_data,
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by gear group
 #'
-#' @param t1nc_data TBD
-#' @param max_categories TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
+#' @return a line chart of the provided data with the given configuration
 #' @export
 t1nc.plot.line_gear_groups = function(t1nc_data, max_categories = NA) {
   return(
@@ -151,14 +150,14 @@ t1nc.plot.line_gear_groups = function(t1nc_data, max_categories = NA) {
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by species' gear group
+#' (see the \code{GearGrpBySpecies} and \code{Species} table in \code{\link{iccat.dev.base::DATABASE_T1}})
 #'
-#' @param t1nc_data TBD
-#' @param max_categories TBD
-#' @param relative TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
+#' @return a line chart of the provided data with the given configuration
 #' @export
-t1nc.plot.line_species_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
+t1nc.plot.line_species_gear_groups = function(t1nc_data, max_categories = NA) {
   return(
     t1nc.plot.line(
       t1nc_data,
@@ -172,10 +171,10 @@ t1nc.plot.line_species_gear_groups = function(t1nc_data, max_categories = NA, re
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by catch type (retained / landed / discarded dead / etc.)
 #'
-#' @param t1nc_data TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @return a line chart of the provided data with the given configuration
 #' @export
 t1nc.plot.line_catch_types = function(t1nc_data) {
   return(
@@ -189,10 +188,10 @@ t1nc.plot.line_catch_types = function(t1nc_data) {
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by species' stocks
 #'
-#' @param t1nc_data TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @return a line chart of the provided data with the given configuration
 #' @export
 t1nc.plot.line_stocks = function(t1nc_data) {
   stock_codes = sort(unique(t1nc_data$Stock))
@@ -216,10 +215,11 @@ t1nc.plot.line_stocks = function(t1nc_data) {
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a line chart categorized by species' sampling areas
 #'
-#' @param t1nc_data TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
+#' @return a linechart of the provided data with the given configuration
 #' @export
 t1nc.plot.line_sampling_areas = function(t1nc_data, max_categories = NA) {
   sampling_area_codes = sort(unique(t1nc_data$SampAreaCode))

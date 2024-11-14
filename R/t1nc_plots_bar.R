@@ -1,15 +1,16 @@
-#' TBD
+#' Generic plots of annual time series T1 nominal catch data as bar charts (either absolute or relative) categorized
+#' through one of the T1 nominal catch attributes.
 #'
-#' @param t1nc_data TBD
-#' @param relative TBD
-#' @param category_column TBD
-#' @param ref_categories TBD
-#' @param max_categories TBD
-#''@param other_category_label TBD
-#''@param legend_title TBD
-#' @param x_breaks_every TBD
-#' @param colors TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
+#' @param category_column the category column among those included in the T1 nominal catch dataset
+#' @param ref_categories an optional list of reference category values, If not provided, it is calculated from the actual data
+#' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
+#''@param other_category_label the _Other_ category label
+#''@param legend_title the legend title
+#' @param x_breaks_every the number of years at which X axis breaks should be placed
+#' @param colors a color table for the selected category, i.e., a table with three columns: \code{_categoryColumn_CODE}, \code{FILL}, \code{OUTLINE}, with the latter two being the RGB colors for the fill and outline components of each bar
+#' @return a bar chart of the provided data with the given configuration
 t1nc.plot.bar = function(t1nc_data,
                          relative = FALSE,
                          category_column,
@@ -137,12 +138,12 @@ t1nc.plot.bar = function(t1nc_data,
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by gear group
 #'
-#' @param t1nc_data TBD
-#' @param max_categories TBD
-#' @param relative TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
+#' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
+#' @return a bar chart of the provided data with the given configuration
 #' @export
 t1nc.plot.bar_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
   return(
@@ -159,12 +160,13 @@ t1nc.plot.bar_gear_groups = function(t1nc_data, max_categories = NA, relative = 
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by species' gear group
+#' (see the \code{GearGrpBySpecies} and \code{Species} table in \code{\link{iccat.dev.base::DATABASE_T1}})
 #'
-#' @param t1nc_data TBD
-#' @param max_categories TBD
-#' @param relative TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
+#' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
+#' @return a bar chart of the provided data with the given configuration
 #' @export
 t1nc.plot.bar_species_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
   return(
@@ -181,11 +183,11 @@ t1nc.plot.bar_species_gear_groups = function(t1nc_data, max_categories = NA, rel
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by catch types (retained / landed / discarded dead / etc.)
 #'
-#' @param t1nc_data TBD
-#' @param relative TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
+#' @return a bar chart of the provided data with the given configuration
 #' @export
 t1nc.plot.bar_catch_types = function(t1nc_data, relative = FALSE) {
   return(
@@ -200,11 +202,11 @@ t1nc.plot.bar_catch_types = function(t1nc_data, relative = FALSE) {
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by species' stocks
 #'
-#' @param t1nc_data TBD
-#' @param relative TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
+#' @return a bar chart of the provided data with the given configuration
 #' @export
 t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
   stock_codes = sort(unique(t1nc_data$Stock))
@@ -229,12 +231,12 @@ t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
   )
 }
 
-#' TBD
+#' Default plot function to display annual time series of T1 nominal catch data as a bar chart categorized by species' sampling areas
 #'
-#' @param t1nc_data TBD
-#' @param relative TBD
-#' @param max_categories TBD
-#' @return TBD
+#' @param t1nc_data the T1 nominal catch data as retrieved through \code{\link{iccat.dev.data::t1nc}}
+#' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
+#' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
+#' @return a bar chart of the provided data with the given configuration
 #' @export
 t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE, max_categories = 16) {
   sampling_area_codes = sort(unique(t1nc_data$SampAreaCode))
