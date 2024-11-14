@@ -93,6 +93,41 @@ For the examples to work, the following statement should be executed once per se
 library(iccat.pub.maps)
 ```
 
+```
+t1nc.plot.bar_gear_groups(T1NC)
+```
+![image](https://github.com/user-attachments/assets/3667bc46-030b-43df-8f1c-5edadaad2799)
+
+```
+t1nc.plot.bar_gear_groups(T1NC, relative = TRUE)
+```
+![image](https://github.com/user-attachments/assets/9c22b87e-bc06-42a7-8ea2-977cf7eda5c4)
+
+```
+t1nc.plot.bar_gear_groups(T1NC, max_categories = 10)
+```
+![image](https://github.com/user-attachments/assets/eab45aaf-41ba-4b51-97b0-b1826d2ef253)
+
+```
+t1nc.plot.bar_catch_types(T1NC)
+```
+![image](https://github.com/user-attachments/assets/2043dfc3-5483-4705-9eae-339e9ca5dd66)
+
+```
+t1nc.plot.bar_species_gear_groups(T1NC[Species == "BUM"])
+```
+![image](https://github.com/user-attachments/assets/f1e6f01c-f9ac-489e-8555-c82436cdd877)
+
+```
+t1nc.plot.bar_stocks(T1NC[Species == "ALB"])
+```
+![image](https://github.com/user-attachments/assets/de38022b-7aa3-4973-8179-348d34c55fcd)
+
+```
+t1nc.plot.bar_sampling_areas(T1NC[Species == "ALB"])
+```
+![image](https://github.com/user-attachments/assets/b4002869-807f-4837-b7c2-d9d30500f2f9)
+
 ### *Dataless* Atlantic maps
 
 #### Default empty Atlantic map
