@@ -20,7 +20,7 @@ This library is meant for public usage, and for this reason it does not have dep
 + By catch type
 + By stock
 + By sampling area 
-3) [Line charts]([#t1-nominal-catch-line-charts))
+3) [Line charts]([#t1-nominal-catch-line-charts)
 + Generic
 + By gear group
 + By species-specific gear group
