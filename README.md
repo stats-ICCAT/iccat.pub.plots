@@ -172,6 +172,7 @@ t1nc.plot.pareto(
 ![image](https://github.com/user-attachments/assets/c976adf8-e2fa-442e-8813-26ae139807f7)
 
 ## Future extensions
-+ [ ] improve the way in which additional `geom_sf` layers are included in the map outputs
-+ [ ] standardize function signatures' for CATDIS piemaps and heatmaps  
-
++ [ ] standardize functions' signatures for all different types of charts
++ [ ] enable provision of all configurable input parameters to boilerplate standard chart functions (for bar / area / line charts)
++ [ ] ensure that the `category_levels` can be derived automatically (when not provided) for the Pareto charts
++ [ ] add other boilerplate Pareto charts functions (e.g., to build gear vs. catch type, species vs. stock, etc. charts)  
