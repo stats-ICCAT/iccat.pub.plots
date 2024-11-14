@@ -42,7 +42,7 @@ This library is meant for public usage, and for this reason it does not have dep
 
 ### Installation
 ```
-install.packages(c("ggplot2", "ggthemes", "ggnewscale", "colorspace", "scales", "sf", "maps", "mapdata", "mapplots", "scatterpie"))
+install.packages(c("data.table", "ggplot2", "ggthemes", "ggnewscale", "colorspace", "scales", "scatterpie", "sf"))
 ```
 
 ## Internal dependencies <a name="internal_deps"></a>
