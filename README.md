@@ -6,28 +6,28 @@ This library is meant for public usage, and for this reason it does not have dep
 
 ## Artifacts that can be produced using the functions provided by the library
 
-1) Bar charts (both absolute / relative)
+1) [Bar charts](#t1-nominal-catch-bar-charts) (both absolute / relative)
 + Generic
 + By gear group
 + By species-specific gear group
 + By catch type
 + By stock
 + By sampling area 
-2) Area charts (both absolute / relative)
+2) [Area charts](#t1-nominal-catch-area-charts) (both absolute / relative)
 + Generic
 + By gear group
 + By species-specific gear group
 + By catch type
 + By stock
 + By sampling area 
-3) Line charts
+3) [Line charts]([#t1-nominal-catch-line-charts))
 + Generic
 + By gear group
 + By species-specific gear group
 + By catch type
 + By stock
 + By sampling area 
-4) Pareto charts (both horizontal / vertical)
+4) [Pareto charts](#t1-nominal-catch-pareto-charts) (both horizontal / vertical)
 + Generic
 + By fleet and gear
 ## External dependencies (CRAN) <a name="external_deps"></a>
