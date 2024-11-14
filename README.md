@@ -128,6 +128,21 @@ t1nc.plot.bar_sampling_areas(T1NC[Species == "ALB"])
 ```
 ![image](https://github.com/user-attachments/assets/b4002869-807f-4837-b7c2-d9d30500f2f9)
 
+```
+t1nc.plot.area_gear_groups(T1NC)
+```
+![image](https://github.com/user-attachments/assets/cf918b40-974c-45b4-a3b5-120bc4e512f3)
+
+```
+t1nc.plot.area_gear_groups(T1NC, relative = TRUE)
+```
+![image](https://github.com/user-attachments/assets/a40ef446-0efb-455f-bde8-41e10e7b88f7)
+
+```
+t1nc.plot.line_species_gear_groups(T1NC)
+```
+![image](https://github.com/user-attachments/assets/9d37c35f-a9cc-48ba-b582-83352d05f624)
+
 ### *Dataless* Atlantic maps
 
 #### Default empty Atlantic map
