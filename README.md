@@ -175,4 +175,5 @@ t1nc.plot.pareto(
 + [ ] standardize functions' signatures for all different types of charts
 + [ ] enable provision of all configurable input parameters to boilerplate standard chart functions (for bar / area / line charts)
 + [ ] ensure that the `category_levels` can be derived automatically (when not provided) for the Pareto charts
-+ [ ] add other boilerplate Pareto charts functions (e.g., to build gear vs. catch type, species vs. stock, etc. charts)  
++ [ ] add other boilerplate Pareto charts functions (e.g., to build gear vs. catch type, species vs. stock, etc. charts)
++ [ ] add cumulative catch trend line to vertical versions of the Pareto charts
