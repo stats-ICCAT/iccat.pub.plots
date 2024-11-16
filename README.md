@@ -41,7 +41,7 @@ This library is meant for public usage, and for this reason it does not have dep
 + `sf`
 
 ### Installation
-```
+```R
 install.packages(c("data.table", "ggplot2", "ggthemes", "ggnewscale", "colorspace", "scales", "scatterpie", "sf"))
 ```
 
@@ -50,7 +50,7 @@ install.packages(c("data.table", "ggplot2", "ggthemes", "ggnewscale", "colorspac
 + [iccat.pub.aes](https://github.com/stats-ICCAT/iccat.pub.aes)
 
 ### Installation (straight from GitHub)
-```
+```R
 library(devtools)
 
 install_github("stats-ICCAT/iccat.pub.plots")
@@ -71,7 +71,7 @@ or by executing the following statement:
 
 For the examples to work, the following statement should be executed once per session:
 
-```
+```R
 library(iccat.pub.plots)
 ```
 
@@ -80,44 +80,43 @@ library(iccat.pub.plots)
 ### T1 nominal catch bar charts 
 
 #### Absolute catches by gear group (all years / gears / fleets / species) 
-```
+```R
 t1nc.plot.bar_gear_groups(T1NC)
 ```
 ![image](https://github.com/user-attachments/assets/3667bc46-030b-43df-8f1c-5edadaad2799)
 
 #### Relative catches by gear group (all years / gears / fleets / species)
-```
+```R
 t1nc.plot.bar_gear_groups(T1NC, relative = TRUE)
 ```
 ![image](https://github.com/user-attachments/assets/9c22b87e-bc06-42a7-8ea2-977cf7eda5c4)
 
 #### Absolute catches by gear group (all years / gears / fleets / species) limited to 10 categories
-```
+```R
 t1nc.plot.bar_gear_groups(T1NC, max_categories = 10)
 ```
 ![image](https://github.com/user-attachments/assets/eab45aaf-41ba-4b51-97b0-b1826d2ef253)
 
 #### Absolute catches by catch type (all years / gears / fleets / species) 
-```
+```R
 t1nc.plot.bar_catch_types(T1NC)
 ```
 ![image](https://github.com/user-attachments/assets/2043dfc3-5483-4705-9eae-339e9ca5dd66)
 
 #### Absolute catches by species-specific gear group (all years / gears / fleets / BUM) 
-
-```
+```R
 t1nc.plot.bar_species_gear_groups(T1NC[Species == "BUM"])
 ```
 ![image](https://github.com/user-attachments/assets/f1e6f01c-f9ac-489e-8555-c82436cdd877)
 
 #### Absolute catches by species-specific stocks (all years / gears / fleets / ALB) 
-```
+```R
 t1nc.plot.bar_stocks(T1NC[Species == "ALB"])
 ```
 ![image](https://github.com/user-attachments/assets/de38022b-7aa3-4973-8179-348d34c55fcd)
 
 #### Absolute catches by species-specific sampling areas (all years / gears / fleets / ALB) 
-```
+```R
 t1nc.plot.bar_sampling_areas(T1NC[Species == "ALB"])
 ```
 ![image](https://github.com/user-attachments/assets/b4002869-807f-4837-b7c2-d9d30500f2f9)
@@ -125,13 +124,13 @@ t1nc.plot.bar_sampling_areas(T1NC[Species == "ALB"])
 ### T1 nominal catch area charts 
 
 #### Absolute catches by gear group (all years / gears / fleets / species) 
-```
+```R
 t1nc.plot.area_gear_groups(T1NC)
 ```
 ![image](https://github.com/user-attachments/assets/cf918b40-974c-45b4-a3b5-120bc4e512f3)
 
 #### Relative catches by gear group (all years / gears / fleets / species)  
-```
+```R
 t1nc.plot.area_gear_groups(T1NC, relative = TRUE)
 ```
 ![image](https://github.com/user-attachments/assets/a40ef446-0efb-455f-bde8-41e10e7b88f7)
@@ -139,7 +138,7 @@ t1nc.plot.area_gear_groups(T1NC, relative = TRUE)
 ### T1 nominal catch line charts 
 
 #### Absolute catches by species-specific gear group (all years / gears / fleets / species) 
-```
+```R
 t1nc.plot.line_species_gear_groups(T1NC)
 ```
 ![image](https://github.com/user-attachments/assets/9d37c35f-a9cc-48ba-b582-83352d05f624)
@@ -147,19 +146,19 @@ t1nc.plot.line_species_gear_groups(T1NC)
 ### T1 nominal catch Pareto charts 
 
 #### Cumulative catches by fleet and gear group (years from 1994 onwards / all gears / fleets / species)
-```
+```R
 t1nc.plot.pareto_fleet_gears(T1NC[YearC >= 1994])
 ```
 ![image](https://github.com/user-attachments/assets/58770e43-a6bd-4a60-91b3-b72127ffebeb)
 
 #### Vertically oriented cumulative catches by fleet and gear group (years from 1994 onwards / all gears / fleets / species)
-```
+```R
 t1nc.plot.pareto_fleet_gears(T1NC[YearC >= 1994], vertical = TRUE)
 ```
 ![image](https://github.com/user-attachments/assets/07e92ab5-3366-462a-9af8-617f9bd50474)
 
 #### Cumulative catches by fleet and catch type, explicitly providing category levels and colors
-```
+```R
 t1nc.plot.pareto(
   T1NC[YearC >= 1994],
   x_column = "FlagName", x_name = "Flag", max_x = 10,
