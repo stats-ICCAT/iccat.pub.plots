@@ -53,7 +53,8 @@ install.packages(c("data.table", "ggplot2", "ggthemes", "ggnewscale", "colorspac
 ```R
 library(devtools)
 
-install_github("stats-ICCAT/iccat.pub.plots")
+install_github("stats-ICCAT/iccat.pub.data")
+install_github("stats-ICCAT/iccat.pub.aes")
 ```
 # Building the library
 
