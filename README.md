@@ -64,7 +64,9 @@ Assuming that all [external](#external_deps) and [internal](#internal_deps) depe
 
 or by executing the following statement:
 
-`devtools::document(roclets = c('rd', 'collate', 'namespace'))`
+```R
+devtools::document(roclets = c('rd', 'collate', 'namespace'))
+```
 
 ## Usage examples
 
