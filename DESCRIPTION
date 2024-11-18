@@ -1,11 +1,11 @@
 Package: iccat.pub.plots
 Type: Package
-Title: TBD
+Title: ICCAT public plots library
 Version: 0.2.0
 Author: ICCAT Secretariat
 Maintainer: Fabio Fiorellato <fabio.fiorellato@iccat.int>
-Description: TBD
-    TBD.
+Description: A set of functions to support the production of different types of plots (bar charts, area charts, line charts, pareto plots, CATDIS maps, etc.) for one or more different types of ICCAT datasets.
+    To produce these plots the actual datasets should be already available to the scripts, as this library does not connect to the ICCAT database to retrieve the needed information.
 License: TBD
 Encoding: UTF-8
 LazyData: true
