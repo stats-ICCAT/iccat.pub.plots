@@ -18,7 +18,7 @@ t1nc.plot.bar = function(t1nc_data,
                          max_categories = NA,
                          other_category_label = NA,
                          legend_title,
-                         x_breaks_every = 10,
+                         x_breaks_every = 5,
                          colors) {
   T1NC = copy(t1nc_data)
   colnames(T1NC)[which(colnames(T1NC) == category_column)] = "CATEGORY_CODE"
@@ -98,7 +98,7 @@ t1nc.plot.bar = function(t1nc_data,
   T1 = T1 +
     scale_x_continuous(expand = c(0, 0),
                        breaks = x_breaks,
-                       guide  = guide_axis(n.dodge = 2))
+                       guide  = guide_axis(n.dodge = 1))
 
   T1 = T1 +
     scale_fill_manual (values = category_colors$FILL) +
@@ -145,7 +145,7 @@ t1nc.plot.bar = function(t1nc_data,
 #' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
 #' @return a bar chart of the provided data with the given configuration
 #' @export
-t1nc.plot.bar_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
+t1nc.plot.bar_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE, x_breaks_every = 5) {
   return(
     t1nc.plot.bar(
       t1nc_data,
@@ -155,7 +155,8 @@ t1nc.plot.bar_gear_groups = function(t1nc_data, max_categories = NA, relative = 
       max_categories = max_categories,
       other_category_label = "OT",
       legend_title = "Gear group",
-      colors = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[, .(CODE = GEAR_GROUP_CODE, FILL, COLOR)]
+      colors = iccat.pub.aes::REF_GEAR_GROUPS_COLORS[, .(CODE = GEAR_GROUP_CODE, FILL, COLOR)],
+      x_breaks_every = x_breaks_every
     )
   )
 }
@@ -168,7 +169,7 @@ t1nc.plot.bar_gear_groups = function(t1nc_data, max_categories = NA, relative = 
 #' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
 #' @return a bar chart of the provided data with the given configuration
 #' @export
-t1nc.plot.bar_species_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE) {
+t1nc.plot.bar_species_gear_groups = function(t1nc_data, max_categories = NA, relative = FALSE, x_breaks_every = 5) {
   return(
     t1nc.plot.bar(
       t1nc_data,
@@ -178,7 +179,8 @@ t1nc.plot.bar_species_gear_groups = function(t1nc_data, max_categories = NA, rel
       max_categories = max_categories,
       other_category_label = "Others",
       legend_title = "Species gear group",
-      colors = iccat.pub.aes::REF_SPECIES_GEAR_GROUPS_COLORS[, .(CODE = SPECIES_GEAR_GROUP, FILL, COLOR)]
+      colors = iccat.pub.aes::REF_SPECIES_GEAR_GROUPS_COLORS[, .(CODE = SPECIES_GEAR_GROUP, FILL, COLOR)],
+      x_breaks_every = x_breaks_every
     )
   )
 }
@@ -189,7 +191,7 @@ t1nc.plot.bar_species_gear_groups = function(t1nc_data, max_categories = NA, rel
 #' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
 #' @return a bar chart of the provided data with the given configuration
 #' @export
-t1nc.plot.bar_catch_types = function(t1nc_data, relative = FALSE) {
+t1nc.plot.bar_catch_types = function(t1nc_data, relative = FALSE, x_breaks_every = 5) {
   return(
     t1nc.plot.bar(
       t1nc_data,
@@ -197,7 +199,8 @@ t1nc.plot.bar_catch_types = function(t1nc_data, relative = FALSE) {
       category_column = "CatchTypeCode",
       ref_categories = iccat.pub.data::REF_CATCH_TYPES$CODE,
       legend_title = "Catch type",
-      colors = iccat.pub.aes::REF_CATCH_TYPES_COLORS[, .(CODE = CATCH_TYPE_CODE, FILL, COLOR)]
+      colors = iccat.pub.aes::REF_CATCH_TYPES_COLORS[, .(CODE = CATCH_TYPE_CODE, FILL, COLOR)],
+      x_breaks_every = x_breaks_every
     )
   )
 }
@@ -208,7 +211,7 @@ t1nc.plot.bar_catch_types = function(t1nc_data, relative = FALSE) {
 #' @param relative whether or not the bars should represent the relative composition of annual catches, or their absolute values
 #' @return a bar chart of the provided data with the given configuration
 #' @export
-t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
+t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE, x_breaks_every = 5) {
   stock_codes = sort(unique(t1nc_data$Stock))
 
   stock_colors =
@@ -226,7 +229,8 @@ t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
       category_column = "Stock",
       ref_categories  = stock_codes,
       legend_title    = "Stock",
-      colors          = stock_colors
+      colors          = stock_colors,
+      x_breaks_every = x_breaks_every
     )
   )
 }
@@ -238,7 +242,7 @@ t1nc.plot.bar_stocks = function(t1nc_data, relative = FALSE) {
 #' @param max_categories the maximum number of categories to display. Everything else will be placed under the _Other_ category
 #' @return a bar chart of the provided data with the given configuration
 #' @export
-t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE, max_categories = 16) {
+t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE, max_categories = 16, x_breaks_every = 5) {
   sampling_area_codes = sort(unique(t1nc_data$SampAreaCode))
   sampling_area_codes = sampling_area_codes[which(sampling_area_codes != "unkn")]
 
@@ -268,7 +272,8 @@ t1nc.plot.bar_sampling_areas = function(t1nc_data, relative = FALSE, max_categor
       max_categories  = max_categories,
       other_category_label = "Other areas",
       legend_title    = "Sampling area",
-      colors          = sampling_area_colors
+      colors          = sampling_area_colors,
+      x_breaks_every = x_breaks_every
     )
   )
 }
